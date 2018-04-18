@@ -13,3 +13,4 @@ Project structure:
 ---
 
 The JavaDoc can be found inside "doc".
+JUnit is used for unit testing, jar version: junit-4.12.jar.

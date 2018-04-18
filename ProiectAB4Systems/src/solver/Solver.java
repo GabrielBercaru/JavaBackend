@@ -27,6 +27,22 @@ public class Solver {
 		parser.readAllEntries(locations);
 	}
 
+	public static void main(String[] args) {
+		// Entry point, used for displaying a simple query result
+		// According to the structure of input0, the cheapest 2 days
+		// trip including mountain trails can be found in location D
+		try {
+			Solver solver = new Solver("input/input0");
+			
+			List<Location> locs = solver.cheapestKDaysDestinationByActivity("traseu montan", 2);
+			for (Location l : locs) {
+				System.out.println(l);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Private method to instantiate inner class members
 	 */
@@ -99,8 +115,9 @@ public class Solver {
 	 * @param k Number of days the customer is planning to spend
 	 * @return A list with the cheapest locations according to the given duration
 	 */
-	public List<Location> cheapestKDaysDestination(int k) {
-		List<Location> locs = locations.values().parallelStream().collect(Collectors.toList());
+	public List<Location> cheapestKDaysDestinationByActivity(String activity, int k) {
+		List<Location> locs = locations.values().parallelStream()
+				.filter(location->location.containsActivity(activity)).collect(Collectors.toList());
 		
 		Collections.sort(locs, new Comparator<Location>() {
 			public int compare(Location l1, Location l2) {

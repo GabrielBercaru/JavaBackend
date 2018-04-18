@@ -18,6 +18,11 @@ import locations.County;
 import locations.Location;
 import solver.Solver;
 
+/**
+ * A class containing unit tests for the required functionalities.
+ *
+ * @author Gabriel Bercaru
+ */
 public class MainClass {
 	private Solver solver;
 	

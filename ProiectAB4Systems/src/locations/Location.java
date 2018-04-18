@@ -87,6 +87,23 @@ public class Location implements Comparable<Location> {
 	}
 	
 	/**
+	 * Public method that checks whether or not the given activity can
+	 * be practiced in this location.
+	 * 
+	 * @param activity The activity to be searched
+	 * @return True if the activity is found here, False otherwise
+	 */
+	public boolean containsActivity(String activity) {
+		for (String currentActivity : activities) {
+			if (activity.equals(currentActivity)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Since the locations are stored inside a TreeSet structure,
 	 * compareTo needs to be override so the entries will be sorted. 
 	 */

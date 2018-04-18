@@ -40,6 +40,17 @@ public class City {
 		return name;
 	}
 	
+	/**
+	 * Override the default equals() method to properly compare
+	 * whether two cities are the same or not.
+	 */
+	@Override
+	public boolean equals(Object o) {
+		City other = (City) o;
+		
+		return name.equals(other.getName());
+	}
+	
 	// Getters and Setters
 	public String getName() {
 		return name;

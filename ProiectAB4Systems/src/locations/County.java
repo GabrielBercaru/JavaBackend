@@ -41,6 +41,17 @@ public class County {
 		return name;
 	}
 	
+	/**
+	 * Override the default equals() method to properly compare
+	 * whether two counties are the same or not.
+	 */
+	@Override
+	public boolean equals(Object o) {
+		County other = (County) o;
+		
+		return name.equals(other.getName());
+	}
+	
 	// Getters and Setters
 	public String getName() {
 		return name;

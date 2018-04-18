@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TreeSet;
 import java.util.Set;
+import java.util.Map;
 
 import locations.City;
 import locations.Country;
@@ -41,7 +42,7 @@ public class Parser {
 	 * @param locations The set of locations that will be used to store the entries
 	 * @throws IOException If the reader fails to read the next line of input
 	 */
-	public void readAllEntries(Set<Location> locations) throws IOException {
+	public void readAllEntries(Map<String, Location> locations) throws IOException {
 		while (readLocation(locations)) {
 			id++;
 		}
@@ -57,7 +58,7 @@ public class Parser {
 	 * @return True if the the parse succeeded, False otherwise
 	 * @throws IOException If the reader failed to read the current line of input
 	 */
-	private boolean readLocation(Set<Location> locations) throws IOException {
+	private boolean readLocation(Map<String, Location> locations) throws IOException {
 		String line = br.readLine();
 		
 		if (line == null || line.length() == 0) {
@@ -88,8 +89,10 @@ public class Parser {
 			e.printStackTrace();
 		}
 		
-		locations.add(new Location(id, name, city, county, country, avgPrice,
+		locations.put(name, new Location(id, name, city, county, country, avgPrice,
 				activities, startDate, endDate));
+		//locations.add(new Location(id, name, city, county, country, avgPrice,
+		//		activities, startDate, endDate));
 		
 		return true;
 	}

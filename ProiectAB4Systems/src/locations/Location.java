@@ -18,6 +18,8 @@ public class Location implements Comparable<Location> {
 	private Set<String> activities;
 	private Date startDate;
 	private Date endDate;
+	private Float totalCost;
+	private Integer numDays;
 	
 	public Location(Integer id, String name, City city, County county,
 					Country country, Float avgPrice,
@@ -32,6 +34,9 @@ public class Location implements Comparable<Location> {
 		this.activities = activities;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		
+		numDays = (int) (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+		totalCost = avgPrice * numDays;
 	}
 
 	@Override
@@ -57,12 +62,63 @@ public class Location implements Comparable<Location> {
 	}
 	
 	/**
+	 * Computes and returns the total cost needed to spend some days
+	 * in this location.
+	 * 
+	 * @param startDate Start date of the interval to consider
+	 * @param endDate End date of the interval to consider
+	 * @return total cost between given dates
+	 */
+	public float totalCostBetweenDates(Date startDate, Date endDate) {
+		numDays = (int) (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+		
+		return avgPrice * numDays;
+	}
+	
+	/**
+	 * Computes and returns the total cost needed to spend the given
+	 * number of days in this location.
+	 * 
+	 * @param numDays Number of days to be spent in this location
+	 * @return total cost for the given number of days
+	 */
+	public float totalCostForKDays(int numDays) {
+		return avgPrice * numDays;
+	}
+	
+	/**
 	 * Since the locations are stored inside a TreeSet structure,
 	 * compareTo needs to be override so the entries will be sorted. 
 	 */
 	@Override
 	public int compareTo(Location other) {
 		return this.id - other.getId();
+	}
+	
+	/**
+	 * Override the default equals() method to properly compare
+	 * whether two locations are the same or not.
+	 */
+	@Override
+	public boolean equals(Object o) {
+		Location other = (Location) o;
+		
+		boolean equalActivities = true;
+		
+		Object[] theseActivities = activities.toArray();
+		Object[] thoseActivities = other.getActivities().toArray();
+		
+		for (int i = 0; i < theseActivities.length; i++) {
+			equalActivities &= theseActivities[i].equals(thoseActivities[i]);
+		}
+		
+		return id.equals(other.getId()) && name.equals(other.getName())
+				&& city.equals(other.getCity()) && county.equals(other.getCounty())
+				&& country.equals(other.getCountry())
+				&& avgPrice.equals(other.getAvgPrice())
+				&& equalActivities
+				&& startDate.equals(other.getStartDate())
+				&& endDate.equals(other.getEndDate());
 	}
 	
 	// Getters and Setters
@@ -74,6 +130,10 @@ public class Location implements Comparable<Location> {
 		return name;
 	}
 
+	public Float getTotalCost() {
+		return totalCost;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
